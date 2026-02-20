@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyScript Calculator</title>
+
+    <!-- PyScript CSS & JS -->
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css">
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+
+    <!-- Custom styling -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f0f2f5;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        #calculator {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
+            width: 320px;
+        }
+
+        input {
+            width: 100%;
+            font-size: 24px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 23%;
+            font-size: 20px;
+            padding: 15px 0;
+            margin: 1%;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            background: #4CAF50;
+            color: #fff;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        #result {
+            margin-top: 15px;
+            font-size: 22px;
+            font-weight: bold;
+            min-height: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>PyScript Calculator</h1>
+
+<div id="calculator">
+    <input type="text" id="expression" placeholder="Enter expression">
+    <div>
+        <button class="num">7</button>
+        <button class="num">8</button>
+        <button class="num">9</button>
+        <button class="op">/</button>
+    </div>
+    <div>
+        <button class="num">4</button>
+        <button class="num">5</button>
+        <button class="num">6</button>
+        <button class="op">*</button>
+    </div>
+    <div>
+        <button class="num">1</button>
+        <button class="num">2</button>
+        <button class="num">3</button>
+        <button class="op">-</button>
+    </div>
+    <div>
+        <button class="num">0</button>
+        <button class="num">.</button>
+        <button id="equals">=</button>
+        <button class="op">+</button>
+    </div>
+    <div>
+        <button id="clear" style="background:#f44336;">C</button>
+    </div>
+    <p id="result"></p>
+</div>
+
+<!-- PyScript Python code -->
+<py-script>
+from js import document
+
+# Get HTML elements
+expression_input = document.getElementById("expression")
+result_display = document.getElementById("result")
+
+# Button click function
+def click(event):
+    text = event.target.innerText
+    if text == "=":
+        expr = expression_input.value
+        try:
+            result = str(eval(expr))
+        except:
+            result = "Error"
+        result_display.innerText = result
+    elif text == "C":
+        expression_input.value = ""
+        result_display.innerText = ""
+    else:
+        expression_input.value += text
+
+# Add event listeners to buttons
+buttons = document.querySelectorAll("button")
+for btn in buttons:
+    btn.addEventListener("click", click)
+</py-script>
+
+</body>
+</html>
